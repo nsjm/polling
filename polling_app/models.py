@@ -95,3 +95,36 @@ class Master_User(AbstractBaseUser):
 
     class Meta:
         unique_together = ('username', 'email')
+
+class Master_PollingManager(models.Manager):
+    def get_active_polling(self):
+        return super(Master_PollingManager, self).get_queryset().filter(polling_status = True)
+
+    def get_nonactive_polling(self):
+        return super(Master_PollingManager, self).get_queryset().filter(polling_status = False)
+
+    def get_owned_polling(self, request):
+        return super(Master_PollingManager, self).get_queryset().filter(polling_creator = request.user)
+
+    def get_active_owned_polling(self, request):
+        return super(Master_PollingManager, self).get_queryset().filter(polling_creator = request.user, polling_status = True)
+    
+    def get_nonactive_owned_polling(self, request):
+        return super(Master_PollingManager, self).get_queryset().filter(polling_creator = request.user, polling_status = False)
+
+
+class Master_Polling(models.Model):
+    polling_id = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+
+    polling_question = models.TextField(editable=False, unique=True)
+    polling_choices = JSONField(default=list, null=False, blank=False)
+    polling_allow_multiple = models.BooleanField(default=False)
+    polling_comment_off = models.BooleanField(default=False)
+    polling_exp_date = models.DateTimeField(default=None, null=True)
+    polling_creator = models.ForeignKey(Master_User, on_delete=models.PROTECT, null=True)
+    polling_status = models.BooleanField(default=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    objects = Master_PollingManager() 

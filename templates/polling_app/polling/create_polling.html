@@ -1,0 +1,115 @@
+{% extends 'polling_app/base/index.html' %}
+{% load static %}
+{% block css %}
+	<link href="{% static 'polling_app/css/additional_plugins/bootstrap-datetimepicker.min.css' %}" rel="stylesheet"/>
+	<style type="text/css">
+		textarea{
+			resize: none;
+		}
+	</style>
+{% endblock %}
+{% block content %}
+<div class="app-content hor-content">
+	<div class="container mt-2">
+		<form method="POST" autocomplete="off">
+			{% csrf_token %}
+			<div class="row">
+				<!-- <div class="col-lg-12"> -->
+					<div class="col-lg-6">
+						<div class=" card">
+							<div class="card-header">
+								<h3 class="card-title">Polling</h3>
+							</div>
+							<div class="card-body pb-2">
+								<div class="row row-sm">
+									<div class="col-lg form-group">
+											<label class="form-label">Pertanyaan</label>
+											<textarea class="form-control mb-4" rows="5" name="frm_question" required></textarea>
+									</div>
+								</div>
+								<div class="row row-sm">
+									<div class="col-lg form-group">
+										<label class="form-label">Pilihan Polling</label>
+										<div class="list_choices">
+											<input class="form-control mb-4" placeholder="Masukkan Pilihan" type="text" name="frm_choices[]" required>
+											<input class="form-control mb-4" placeholder="Masukkan Pilihan" type="text" name="frm_choices[]" required>
+										</div>
+										<div class="text-center">
+											<button class="btn btn-md btn-info" id="add_choices"><i class="fa fa-plus" data-bs-toggle="tooltip" title="Tambah Pilihan"></i> Tambah Pilihan</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="card">
+							<div class="card-header">
+								<h3 class="card-title">Pengaturan</h3>
+							</div>
+							<div class="card-body pb-2">
+								<div class="custom-controls-stacked">
+									<label class="custom-control custom-checkbox">
+										<input type="checkbox" class="custom-control-input" name="frm_allow_multiple" value="True">
+										<span class="custom-control-label">Ijinkan memilih lebih dari satu</span>
+									</label>
+									<label class="custom-control custom-checkbox">
+										<input type="checkbox" class="custom-control-input" name="frm_comment_off" value="True">
+										<span class="custom-control-label">Non-aktifkan komentar</span>
+									</label>
+								</div>
+								<label class="form-label">Tanggal Akhir Polling</label>
+								<div class="input-group">
+									<input class="form-control" type="text" readonly name="frm_exp_date" id="frm_exp_date">
+									<span class="input-group-text btn btn-danger btn-sm" id="clear_date"><i class="fa fa-eraser c-white" data-bs-toggle="tooltip" title="Hapus Tanggal"></i></span>
+								</div>
+								<small class="form-text text-info">Kosongi apabila tidak ingin membatasi polling.</small>
+								<div class="text-end">
+									<button class="btn btn-md btn-success mt-3"><i class="fa fa-send" data-bs-toggle="tooltip" title="Buat Polling"></i> Buat Polling</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				<!-- </div> -->
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript" src="{% static 'polling_app/js/additional_plugins/md5.js' %}"></script>
+<script type="text/javascript" src="{% static 'polling_app/js/additional_plugins/jquery.browser-fingerprint-1.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'polling_app/js/additional_plugins/moment-2.21.0.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'polling_app/js/additional_plugins/id.js' %}"></script>
+<script type="text/javascript" src="{% static 'polling_app/js/additional_plugins/bootstrap-datetimepicker.min.js' %}"></script>
+<script type="text/javascript">
+	$(function(){
+		$('#frm_exp_date').datetimepicker({
+				locale: moment.locale('id'),
+				format:'DD MMMM YYYY HH:mm',
+				minDate: moment(),
+				sideBySide: true,
+				showTodayButton: true,
+				showClear: true,
+				showClose: true,
+				ignoreReadonly: true,
+		});
+
+		var tgl = $('#frm_exp_date').data("DateTimePicker");
+
+		$('#add_choices').click(function(event){
+			event.preventDefault();
+			$('.list_choices').append(`<div class="input-group mb-4"><input class="form-control" placeholder="Masukkan Pilihan" type="text" name="frm_choices[]"><span class="input-group-text btn btn-danger btn-sm" onclick="delete_this_choice(this)"><i class="fa fa-trash c-white" data-bs-toggle="tooltip" title="Hapus Pilihan"></i></span></div>`)
+		});
+
+		$('#clear_date').click(function(){
+			tgl.clear()
+		});
+	});
+
+	function delete_this_choice(e){
+		$(e).parent('div').remove();
+	}
+</script>
+{% endblock %}

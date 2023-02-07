@@ -95,8 +95,8 @@ $(function(e) {
 			show:true
 		}
 	}
-	var chart = new ApexCharts(document.querySelector("#chartArea"), options);
-	chart.render();
+	// var chart = new ApexCharts(document.querySelector("#chartArea"), options);
+	// chart.render();
 
 	
 	
@@ -166,8 +166,8 @@ $(function(e) {
 		labels: [""]
 	};
 
-	var chart = new ApexCharts(document.querySelector("#recentorders"), options);
-	chart.render();
+	// var chart = new ApexCharts(document.querySelector("#recentorders"), options);
+	// chart.render();
 	
 
 

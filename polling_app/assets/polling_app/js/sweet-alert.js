@@ -35,7 +35,7 @@ $(function(e) {
 		swal({
 			title: title,
 			text: message,
-			imageUrl: '../../assets/images/brand/logo-3.png'
+			imageUrl: '../../assets/images/brand/logo-3.svg'
 		});
 	});
 	// Timer

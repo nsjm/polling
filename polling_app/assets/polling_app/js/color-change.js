@@ -4,7 +4,7 @@
  jQuery(document).ready(function($){
  $('.color1').on({
      'click': function(){
-         $('#change-image').attr('src','../../assets/images/brand/logo-3.png');
+         $('#change-image').attr('src','../../assets/images/brand/logo-3.svg');
      }
  });
  

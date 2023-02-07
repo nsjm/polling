@@ -4,41 +4,17 @@
 	<div class="container">
 		<div class="d-flex">
 			<a class="animated-arrow hor-toggle horizontal-navtoggle"><span></span></a>
-			<a class="header-brand1" href="index.html">
-				<img src="{% static 'polling_app/images/brand/logo-3.png' %}" class="header-brand-img desktop-logo" alt="logo">
-				<img src="{% static 'polling_app/images/brand/logo.png' %}" class="header-brand-img light-logo" alt="logo">
-			</a><!-- LOGO -->
-			<div class="main-header-center ms-3 d-none d-md-block">
-				<input class="form-control" placeholder="Search for anything..." type="search"> <button class="btn"><i class="fa fa-search" aria-hidden="true"></i></button>
-			</div>
+			<a class="header-brand1" href="{% url 'polling_app:index_main' %}">
+				<img src="{% static 'polling_app/images/brand/logo-3.svg' %}" class="header-brand-img desktop-logo" alt="logo">
+			</a><!-- LOGO -->	
 			<div class="d-flex order-lg-2 ms-auto header-right-icons">
-				<div class="dropdown d-lg-none d-md-block d-none">
-					<a href="#" class="nav-link icon" data-bs-toggle="dropdown">
-						<i class="fe fe-search"></i>
+				{% if not request.user.is_authenticated %}
+				<div class="d-none d-md-flex">
+					<a class="nav-link icon nav-link-bg">
+						<span class="dark-layout" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Login"><i class="fe fe-log-in "></i></span>
 					</a>
-					<div class="dropdown-menu header-search dropdown-menu-start">
-						<div class="input-group w-100 p-2">
-							<input type="text" class="form-control" placeholder="Search....">
-							<div class="input-group-text btn btn-primary">
-								<i class="fa fa-search" aria-hidden="true"></i>
-							</div>
-						</div>
-					</div>
-				</div><!-- SEARCH -->
-				<button class="navbar-toggler navresponsive-toggler d-md-none ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon fe fe-more-vertical text-dark"></span>
-				</button>
-				<div class="dropdown d-none d-md-flex">
-					<a class="nav-link icon theme-layout nav-link-bg layout-setting">
-						<span class="dark-layout" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Dark Theme"><i class="fe fe-moon"></i></span>
-						<span class="light-layout" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Light Theme"><i class="fe fe-sun"></i></span>
-					</a>
-				</div><!-- Theme-Layout -->
-				<div class="dropdown d-none d-md-flex">
-					<a class="nav-link icon full-screen-link nav-link-bg">
-						<i class="fe fe-minimize fullscreen-button"></i>
-					</a>
-				</div><!-- FULL-SCREEN -->
+				</div>
+				{% else %}
 				<div class="dropdown d-none d-md-flex notifications">
 					<a class="nav-link icon" data-bs-toggle="dropdown"><i class="fe fe-bell"></i><span class=" pulse"></span>
 					</a>
@@ -160,8 +136,8 @@
 					<div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
 						<div class="drop-heading">
 							<div class="text-center">
-								<h5 class="text-dark mb-0">Elizabeth Dyer</h5>
-								<small class="text-muted">Administrator</small>
+								<small class="text-muted">Selamat Datang</small>
+								<h5 class="text-dark mb-0">User</h5>
 							</div>
 						</div>
 						<div class="dropdown-divider m-0"></div>
@@ -183,11 +159,7 @@
 						</a>
 					</div>
 				</div>
-				<div class="dropdown d-none d-md-flex header-settings">
-					<a href="#" class="nav-link icon " data-bs-toggle="sidebar-right" data-target=".sidebar-right">
-						<i class="fe fe-menu"></i>
-					</a>
-				</div><!-- SIDE-MENU -->
+				{% endif %}
 			</div>
 		</div>
 	</div>

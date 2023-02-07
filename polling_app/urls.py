@@ -4,7 +4,7 @@ from django.conf.urls import url
 
 # from . import views
 from .views import base_views
-# from .views import account_views
+from .views import polling_views
 # from .views import booking_views
 # from .views import busdetail_views
 # from .views import master_satuan_views
@@ -15,6 +15,10 @@ from django.conf.urls import handler403
 app_name = 'polling_app'
 urlpatterns = [
 	path('', base_views.IndexView.as_view(), name = 'index_main'),
+	path('polling/', include([
+		path('<uuid:polling_id>/', polling_views.ShowPollingViews.as_view(), name='show_polling'),
+		path('createpolling/', polling_views.CreatePollingViews.as_view(), name='create_polling'),
+	])),
 	# path('show_result/', base_views.ShowResultView.as_view(), name = 'show_result'),
 
 	# # ADD JOEL (11 Juni 2022 - RIZQ SANJATEK) => UPDATE TEMPLATE NEW =========================================

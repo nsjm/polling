@@ -3,7 +3,7 @@
   $(function () {
     $.growl({
       title: "Growl",
-      message: "Hi I'm Zanex"
+      message: "Hi Welcome"
     });
 
 	 $('.error').click(function (event) {

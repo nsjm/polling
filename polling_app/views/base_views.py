@@ -17,13 +17,14 @@ from django.db.models.functions import Cast
 from django.utils.timezone import get_current_timezone
 
 # -------- MODEL -----------
-# from sibarcode_main_app.models import Master_User, Master_konten, Master_news
+from polling_app.models import Master_Polling
 # ----- END MODEL ------
 
 # Create your views here.
 class IndexView(View):
 	def get(self, request):
+		all_voting = Master_Polling.objects.get_active_polling()
 		data = {
-
+			'all_voting':all_voting,
 		}
 		return render(request, 'polling_app/base/home.html', data)
